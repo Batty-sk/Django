@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@700&family=Dancing+Script&display=swap" rel="stylesheet">
+
+<!--Styling part-->
+<style>
+
+  .heading_{
+    color:rgb(246, 6, 138);
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+    
+  }
+  #heading_{
+    color:rgb(246, 6, 138);
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    font-size: 70px;
+  }
+  .para{
+ font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color:rgb(0, 0, 0);
+    text-align: justify;
+    font-size: 20px;
+  }
+.template_box:hover{
+box-shadow: 0px 0px 15px rgb(11, 235, 255);
+}
+.head{
+  background-color: rgb(47, 47, 70);
+
+  padding-bottom: 10px;
+  padding-top: 10px;
+  font-size: 1rem;
+  color:white;
+  cursor: pointer;
+}
+.head:hover{
+  border-bottom: 4px solid aquamarine;
+}
+.H{
+  background-color: rgb(47, 47, 70);
+  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+}
+#footer{
+  background-color: rgb(47, 47, 70);
+  color:white;
+  border-top-right-radius: 50%;
+  border-top-left-radius: 50%;
+}
+#upper{
+  background-color: white;
+  background-image: url("{% static 'background.jpg' %}");
+  box-shadow: 0px 0px 12px black;
+}
+body{
+  background-color: whitesmoke;
+  min-height: 100vh;
+
+}
+#buton{
+padding-left: 20px;
+padding-right: 20px;
+transition: background-color 2s, color 1s;
+}
+#buton:hover{
+  background-color: white;
+  color:black;
+}
+body{
+  background-image: url("{% static 'background2.png' %}");
+  background-position: 100px 300px;
+}
+.foooter{
+        position: sticky;
+        top:100%;
+        background-color: rgb(54, 60, 85);
+        color:white;
+        font-family: monospace;
+        padding: 15px;
+        border-top-right-radius: 50%;
+        border-top-left-radius: 50%;
+        box-shadow: 0px -5px 5px black;
+    }
+    .heading_2{
+      font-size: 50px;
+      color:rgb(218, 3, 39);
+    }
+</style>
+<body>
+<div class="container-fluid br" style="height:100%;">
+{% include 'header.html' %}
+<div class="row mt-5 " >
+  <div class="col-10 mb-5 offset-1" id="upper">
+    <div class="row">
+<div class="col-12 text-center">
+  <h1 id="heading_">Quickme Builder</h1>
+</div>
+
+<div class="col-md-8 offset-md-2 mt-5 mb-5">
+<h6 class="para ">QuickMe Is A PowerFul Tool For Building Stylish Resume Within Minutes.To Use It You Have To Register it. After Registering You Have To Choose The Templates From Below And Provide The Details Asked In The Form. After Filling Up The Form You Have to Click On Submit Button To Get Your Resume</h6>
+</div>
+</div>
+<div class="row">
+  <div class="col-12 text-center mb-5"><a href="#templates" class="btn btn-dark" id="buton">START</a></div>
+</div>
+</div>
+<div class="col-12 text-center mt-5">
+<h1 class="heading_">Choose A Template</h1>
+<div class="row " id="templates">
+  <div class="col-12">
+    <div class="row justify-content-center">
+      {% for template,no in templates.items %}
+      <div class="col-auto mt-5 template_box">
+      <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{% static template %}" alt="Card image cap" height="450px;">
+        <div class="card-body">
+          <a href="{% url 'template' no %}"><button class="btn btn-success">CREATE</button></a>
+        </div>
+        </div> 
+      </div>
+      {% endfor %}
+</div>
+  </div>
+</div>  
+</div>
+</div>
+<br>
+</div>
+
+{% include 'footer.html' %}
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+</html>

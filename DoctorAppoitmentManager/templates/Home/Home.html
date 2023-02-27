@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Hoome {% endblock title %}</title>
+</head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+{% block style %}
+<style>
+    body{
+        height: 100vh;
+        background-color: whitesmoke ;
+    }
+        .form-area{
+        color:black;
+        font-family: monospace;
+        font-weight: bold;
+        background-color:rgb(235, 218, 235);
+        border-radius: 5px;
+    }
+    header a{
+        padding:15px;
+        background-color: rgb(197, 197, 194);
+        border-radius: 20%;
+        font-family: monospace;
+        text-decoration: none;
+    }
+    header a:hover{
+        background-color: powderblue;
+        cursor: pointer;
+    }
+    header .row{
+        background-color: rgb(121, 157, 145);
+    }
+ 
+    .foooter{
+        position: sticky;
+        top:100%;
+        background-color: rgb(136, 173, 161);
+        color:rgb(96, 30, 83);
+        font-family: monospace;
+        padding: 15px;
+        border-top-right-radius: 50%;
+        border-top-left-radius: 50%;
+    }
+    
+</style>
+{% endblock style %}
+{% block header %}{% include 'Home/Header.html' %}{% endblock header %}
+<body>
+    {% block container %}
+    <div class="container">
+            <div class="row">
+                <form action="" method="POST" novalidate>
+                    <div class="col-12">
+                    <div class="row mt-5 justify-content-center">
+                        <div class="col-6 form-area">
+                            {% csrf_token %}
+                            <div class="row">
+                        {% for f in form %}
+                            {% if f.name == 'Email' or f.name == 'Phone' %}
+                            <div class="col-12"> 
+                                <p>{{f.label_tag}}</p>
+                                <p>{{f}}</p>
+                                <p>{{f.errors|striptags}}</p>
+                            </div>
+                
+                            {% else %}
+                
+                            <div class="col-6 mt-2">
+                                <p>{{f.label_tag}}</p>
+                                <p>{{f}}</p>     
+                                <p>{{f.errors|striptags}}</p>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                        </div>
+                        <div class="row">  
+                            <div class="col-12 text-center">
+                        <input type="submit" class="btn btn-info" value="Create">
+                    </div>
+                    </div>
+                        </div>
+                        </div>
+                    </div>
+                    </form>
+            </div>
+    </div>
+    {% endblock container %}
+</body>
+{% include 'Home/Footer.html' %}
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
+</html>

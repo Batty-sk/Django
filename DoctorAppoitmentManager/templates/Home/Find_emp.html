@@ -1,0 +1,183 @@
+{% extends 'Home/Home.html' %}
+{% block title %}Search Employees {% endblock title %}
+{% block style %}
+<style>
+    .small-field{
+        width:50%;
+        transition: box-shadow 500ms;
+        border-color: rgb(70, 91, 78);
+        border-radius: 10%;
+
+
+    }
+    .small-field:focus{
+        box-shadow: 0px 0px 10px aquamarine;
+    }
+    .br{
+        border:2px solid black;
+    }
+
+    .large-field{
+        width: 100%;
+        border-radius: 10%;
+    }
+    .form-area{
+        color:black;
+        font-family: monospace;
+        font-weight: bold;
+        background-color:rgb(235, 218, 235);
+        border-radius: 5px;
+    }
+    .medium-field{
+        width:90%;
+    }
+    .display-area{
+        border:15px inset black;
+        border-radius: 10px;
+    }
+    header a{
+        padding:15px;
+        background-color: rgb(197, 197, 194);
+        border-radius: 20%;
+        font-family: monospace;
+    }
+    header a:hover{
+        background-color: powderblue;
+        cursor: pointer;
+    }
+    header .row{
+        background-color: rgb(121, 157, 145);
+    }
+    .foooter{
+        position: sticky;
+        top:100%;
+        background-color: rgb(136, 173, 161);
+        color:rgb(96, 30, 83);
+        font-family: monospace;
+        padding: 15px;
+        border-top-right-radius: 50%;
+        border-top-left-radius: 50%;
+    }
+    .emp_details{
+        position: relative;
+    }
+    .mono{
+        font-family: monospace;
+    }
+</style>
+{% endblock style %}
+{% block container %}
+<div class="container">
+    <form action="" method="POST" novalidate>
+    <div class="row mt-5">
+        <div class="col-6 form-area">
+            {% csrf_token %}
+            <div class="row">
+        {% for f in form %}
+        {% if f.name == 'Fetch_Multiple_records' %}
+            <div class="col-12 mt-2 text-center">
+                    {{f}}
+                    {{f.label_tag}}
+                    <p>{{f.errors}}</p>
+            </div>
+        {% else %}
+            {% if f.name == 'Email' or f.name == 'Phone' %}
+            <div class="col-12"> 
+                <p>{{f.label_tag}}</p>
+                <p>{{f}}</p>
+                <p>{{f.errors|striptags}}</p>
+            </div>
+
+            {% else %}
+
+            <div class="col-6 mt-2">
+                <p>{{f.label_tag}}</p>
+                <p>{{f}}</p>     
+                <p>{{f.errors|striptags}}</p>
+            </div>
+            {% endif %}
+        {% endif %}
+        {% endfor %}
+        </div>  
+        <div class="col-12 mb-4 text-center">
+            <button class="btn btn-warning">Search</button>
+            <button class="btn btn-info">Update</button>
+
+        </div> 
+        </div>  
+        <div class="col-6 br display-area">
+            <div class="row ">
+                {% if Emp %}
+                    {% for e in Emp %}
+                    <div class="col-12 emp_details mt-3">
+                        <button class="btn btn-success dropdown-toggle w-100 mono" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                           {{e.First_Name}} {{e.Last_Name}}
+                          </button>
+                          <div class="dropdown-menu w-80">
+                            <form class="px-4 py-3">
+                                <div class="row">
+                                    <div class="col-md-6 mt-2">
+                                        <h5>ID</h5>
+                                        <span>{{e.id}}</span>
+                                        </div>  
+                                    <div class="col-md-6 mt-2">
+                                        <h5>Age</h5>
+                                        <span>{{e.Age}}</span>
+                                    </div>
+                                    <div class="col-md-6 mt-2">
+                                        <h5>First Name</h5>
+                                        <input type="text" name="first_name" value="{{e.First_Name}}" disabled>
+                                        </div>
+                                  <div class="col-md-6 mt-2">
+                                        <h5>Last Name</h5>
+                                        <input type="text" name="last_name" value="{{e.Last_Name}}" disabled>
+                                  </div>
+                                  <div class="col-md-6 mt-2">
+                                    <h5>Email</h5>
+                                    <input type="text" name="last_name" value="{{e.Email}}" disabled>
+                              </div>
+                              <div class="col-md-6 mt-2">
+                                <h5>Phone</h5>
+                                <input type="text" name="last_name" value="{{e.Phone}}" disabled>
+                          </div>
+                            <div class="col-md-6 mt-2">
+                                <h5>State</h5>
+                                <input type="text" name="last_name" value="{{e.State}}" disabled>
+                            </div>
+                            <div class="col-md-6 mt-2">
+                                <h5>City</h5>
+                                <input type="text" name="last_name" value="{{e.City}}" disabled>
+                            </div>
+                            <div class="col-md-6 mt-2">
+                                <h5>Date_of_joining</h5>
+                                <input type="text" name="last_name" value="{{e.Date_of_joining}}" disabled>
+                            </div>
+                            <div class="col-md-6 mt-2">
+                                <h5>Date_of_birth</h5>
+                                <input type="text" name="last_name" value="{{e.Date_of_birth}}" disabled>
+                            </div>
+                            <div class="col-md-6 mt-2">
+                                <h5>Department</h5>
+                                <input type="text" name="last_name" value="{{e.Department}}" disabled>
+                            </div>
+                            <div class="col-md-6 mt-2">
+                                <h5>Married</h5>
+                                <input type="text" name="last_name" value="{{e.Married}}" disabled>
+                            </div>
+                            <div class="col-12 mt-3"> 
+                                <a href="" class="btn btn-danger">Delete</a>
+                            </div>
+                                </div>
+                            </form>
+
+                          </div>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</form>
+
+</div>
+{% endblock container %}

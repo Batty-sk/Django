@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quizes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@700&family=Dancing+Script&display=swap" rel="stylesheet">
+</head>
+<style>
+
+body{
+    background-color: whitesmoke;
+    background-image: url("{% static 'background.png' %}");
+
+}
+p{
+    cursor: pointer;
+}
+.design{
+    font-family:Arial, Helvetica, sans-serif;
+}
+.inner_d{
+    font-family: monospace;
+    font-size: 20px;
+    background-color: azure;
+    box-shadow: 0 2px 5px rgb(49, 234, 255);
+}
+.h_design{
+    background-color: rgb(55, 55, 55);
+    box-shadow: 0px 5px 5px rgb(0, 0, 0);
+    padding: 20px;
+    color:white;
+    font-family: 'Barlow Semi Condensed', sans-serif;
+}
+.active{
+    background-color: aquamarine;
+}
+.btn{
+    background-color: aqua;
+    font-family: monospace;
+}
+.btn:hover{
+    background-color: hotpink;
+}
+.msg{
+    color:red;
+
+}
+</style>
+<body>
+    <div class="container-fluid">
+    <div class="container">
+        <div class="row">
+                    {% if messages %}
+                    <div class="alert alert-danger d-flex align-items-center" role="alert">
+                        <div class="col-12 text-center">
+                            {% for m in messages %}
+                            <h5 class="msg">{{m}}</h5>
+                            {% endfor %}
+                        </div>
+                      </div>
+                    {% endif %}
+            <form action="{% url 'quiz' category %}" method="POST">
+                {% csrf_token %}
+                {% for q in quiz %}
+                <div class="col-12 design mt-5">
+                <h3 class="h_design">{{q.Question}}</h3>
+                <p id="{{q.Option1}}{{q.Question|cut:' '}}" onclick="call_its_parent(this.id)" class="mt-2 inner_d">{{q.Option1}}</p>
+                <p id="{{q.Option2}}{{q.Question|cut:' '}}" onclick="call_its_parent(this.id)" class="mt-2 inner_d">{{q.Option2}}</p>
+                <p id="{{q.Option3}}{{q.Question|cut:' '}}" onclick="call_its_parent(this.id)" class="mt-2 inner_d">{{q.Option3}}</p>
+                <p id="{{q.Option4}}{{q.Question|cut:' '}}" onclick="call_its_parent(this.id)" class="mt-2 inner_d">{{q.Option4}}</p>
+            </div>
+            <input type="text" name="{{q.id}}" hidden >    
+                {% endfor %}
+           <div class="col-12 text-center mt-5 mb-5">
+                    <button type="submit" class="btn ps-4 pe-4 ">Submit My Quiz</button></div>
+                </form>
+    </div>
+    </div>
+    </div>
+   
+</body>
+<script>
+    function call_its_parent(id){
+        let a=document.getElementById(id);
+        let input=a.parentElement.nextElementSibling;
+        input.setAttribute('value',a.innerText);
+        for(i=0;i<a.parentElement.children.length;i++){ 
+            if(a.parentElement.children[i].classList.contains('active')){
+                    a.parentElement.children[i].classList.toggle('active');
+            }
+        }
+        a.classList.toggle('active');
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+</html>

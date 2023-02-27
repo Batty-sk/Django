@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show-Report</title>
+</head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+<style>
+  *{
+    font-family: monospace;
+  }
+  body{
+    background-color: rgb(189, 214, 191);
+    height: 100vh;
+  }
+  span{
+    font-size: 2rem;
+  }
+  .n-name{
+    font-weight: bolder;
+    color:blue;
+  }
+  .align-self-center{
+    background-color: rgb(138, 255, 127);
+    border-radius:10px;
+    padding:20px;
+  }
+.gain h3{
+  color:green;
+}
+.burned h3{
+  color:red;
+}
+</style>
+<body>
+    <div class="container h-100">
+        <div class="row text-center h-100">
+
+          <div class="col-12 align-self-center">
+            <div class="col-md-12" >
+                <h1 style="font-family:monospace; font-weight: bold;">Your Calorie Stats </h1>
+            </div>
+            <div class="col-md-12">
+              <div class="row">
+                  <div class="col-md-6 col-12">
+                  <div id="donutchart" class="img-fluid" style="height: 400px;"></div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="row mt-5">
+                      <div class="col-md-6 gain">
+                      <h3>Total Nutrition Gain: <span>{{calories_gain}} KCal</span></h3>
+                    </div>
+                    
+                    <div class="col-md-6 burned">
+                      <h3>Total Nutrition Burned: <span>{{calories_loss}} KCal</span></h3>
+                    </div>
+                      </div>
+                      <h1>Other Nutritions: </h1>
+                    
+                    <div class="row mt-5 justify-content-center">
+                      {% for n,c in nutrition.items %}
+                      {% if n != 'calories' and n != 'cholestrol' %}
+                      <div class="col-md-12 text-center mt-2" style="border:1px solid black;">
+                      <span class="n-name text-start">{{n | capfirst }}:</span><span>{{c}}g</span>
+                      </div>
+                      {% endif %} 
+                      {% if n == 'cholestrol' %}
+                        <div class="col-md-12 mt-2" style="border:1px solid black;"">
+                      <span class="n-name text-start">{{n | capfirst }}:</span><span>{{c}}mg</span>
+                      </div>
+                      {% endif %}
+                      {% endfor %}
+                
+              </div>
+                  </div>
+                  <!--Other Nutritions-->
+                  <div class="col-12">
+                   
+                </div>
+              </div>
+            </div>
+    </div>
+  </div>
+    </div>
+    </div>
+</body>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> 
+<script type="text/javascript">
+google.charts.load("current", {packages:["corechart"]});
+google.charts.setOnLoadCallback(drawChart);
+calorie_gain='{{calories_gain}}';
+calorie_loss='{{calories_loss}}'
+calorie_gain=parseInt(calorie_gain)
+calorie_loss=parseInt(calorie_loss)
+console.log(calorie_loss);
+function drawChart() {
+  var data = google.visualization.arrayToDataTable([
+    ['Task', 'Kcal'],
+    ['Total Calories',calorie_gain],
+    ['Total Burn',calorie_loss],
+  ]);
+
+  var options = {
+    pieHole: 0.4,
+  };
+
+  var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+  chart.draw(data, options);
+}
+</script>
+</html>
